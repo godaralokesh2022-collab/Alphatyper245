@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpha Typer - Enhance Your Typing Speed</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ffd166;
+        }
+
+        .main-content {
+            display: flex;
+            margin: 2rem 0;
+        }
+
+        .left-ad, .right-ad {
+            width: 160px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .left-ad {
+            margin-right: 20px;
+        }
+
+        .right-ad {
+            margin-left: 20px;
+        }
+
+        .ad-label {
+            font-size: 0.8rem;
+            color: #777;
+            margin-bottom: 5px;
+        }
+
+        .ad-content {
+            width: 100%;
+            height: 600px;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .typing-area {
+            flex: 1;
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .level-selector {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 1rem;
+        }
+
+        .level-btn {
+            padding: 0.5rem 1.5rem;
+            margin-right: 1rem;
+            border: none;
+            background-color: #e9ecef;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .level-btn.active {
+            background-color: #6a11cb;
+            color: white;
+        }
+
+        .level-btn:hover:not(.active) {
+            background-color: #d8dbe0;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .stat-box {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #6a11cb;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .text-display {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            min-height: 150px;
+            border: 1px solid #e9ecef;
+        }
+
+        .current-word {
+            background-color: #6a11cb;
+            color: white;
+            padding: 0 4px;
+            border-radius: 4px;
+        }
+
+        .correct {
+            color: #28a745;
+        }
+
+        .incorrect {
+            color: #dc3545;
+            text-decoration: underline;
+        }
+
+        .input-area {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.2rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-area:focus {
+            outline: none;
+            border-color: #6a11cb;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #6a11cb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #5a0db3;
+        }
+
+        .btn-secondary {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d8dbe0;
+        }
+
+        .timer {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #495057;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 992px) {
+            .left-ad, .right-ad {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+
+            .stats {
+                flex-direction: column;
+            }
+
+            .stat-box {
+                margin-bottom: 1rem;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .timer {
+                margin: 1rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i>⌨️</i> Alpha Typer
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Levels</a></li>
+                        <li><a href="#">Leaderboard</a></li>
+                        <li><a href="#">About</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="left-ad">
+                <div>
+                    <div class="ad-label">Advertisement</div>
+                    <div class="ad-content">
+                        Ad Space<br>ca-app-pub-1372288205805943/2406969850
+                    </div>
+                </div>
+            </div>
+
+            <div class="typing-area">
+                <div class="level-selector">
+                    <button class="level-btn active" data-level="beginner">Beginner</button>
+                    <button class="level-btn" data-level="intermediate">Intermediate</button>
+                    <button class="level-btn" data-level="advanced">Advanced</button>
+                    <button class="level-btn" data-level="expert">Expert</button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-value" id="wpm">0</div>
+                        <div class="stat-label">Words Per Minute</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="accuracy">0%</div>
+                        <div class="stat-label">Accuracy</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="time">60</div>
+                        <div class="stat-label">Seconds Remaining</div>
+                    </div>
+                </div>
+
+                <div class="text-display" id="text-display">
+                    Click the Start button to begin the typing test. You will see text here that you need to type as quickly and accurately as possible.
+                </div>
+
+                <input type="text" class="input-area" id="typing-input" placeholder="Start typing here..." disabled>
+
+                <div class="controls">
+                    <button class="btn btn-secondary" id="reset-btn">Reset</button>
+                    <div class="timer" id="timer">60</div>
+                    <button class="btn btn-primary" id="start-btn">Start Test</button>
+                </div>
+            </div>
+
+            <div class="right-ad">
+                <div>
+                    <div class="ad-label">Advertisement</div>
+                    <div class="ad-content">
+                        Ad Space<br>ca-app-pub-1372288205805943/9452219347
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="copyright">
+                    &copy; 2023 Alpha Typer. All rights reserved.
+                </div>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample sentences for different levels
+        const sentences = {
+            beginner: [
+                "The quick brown fox jumps over the lazy dog.",
+                "Practice makes perfect when learning to type.",
+                "Typing is an essential skill in the digital age.",
+                "Keep your fingers on the home row for better accuracy.",
+                "Speed and accuracy both matter in typing tests.",
+                "Regular practice will improve your typing skills.",
+                "Focus on the screen, not on your keyboard.",
+                "Good posture helps in maintaining typing speed.",
+                "Start slow and gradually increase your speed.",
+                "Use all your fingers for efficient typing."
+            ],
+            intermediate: [
+                "Programming is the process of creating a set of instructions that tell a computer how to perform a task.",
+                "Web development involves creating websites and web applications for the internet.",
+                "JavaScript is a versatile programming language used for web development.",
+                "Responsive design ensures websites look good on all devices.",
+                "Debugging is the process of finding and fixing errors in code.",
+                "Version control systems help developers track changes to their code.",
+                "APIs allow different software applications to communicate with each other.",
+                "Cloud computing provides computing services over the internet.",
+                "Machine learning enables computers to learn without being explicitly programmed.",
+                "Cybersecurity protects systems and networks from digital attacks."
+            ],
+            advanced: [
+                "Quantum computing utilizes quantum-mechanical phenomena to perform operations on data.",
+                "Artificial intelligence systems can perform tasks that typically require human intelligence.",
+                "Blockchain technology creates a decentralized and distributed digital ledger.",
+                "Neural networks are computing systems inspired by the human brain.",
+                "Cryptography secures communication and data in the presence of adversaries.",
+                "Bioinformatics combines biology and computer science to analyze biological data.",
+                "Natural language processing enables computers to understand human language.",
+                "Computer vision allows machines to interpret and understand visual information.",
+                "Internet of Things connects physical devices to exchange data over networks.",
+                "Augmented reality overlays digital information onto the real world."
+            ],
+            expert: [
+                "The epistemological foundations of computational linguistics intersect with cognitive science and philosophy of mind.",
+                "Heterogeneous parallel computing architectures leverage both CPUs and GPUs for optimal performance.",
+                "Polymorphic recursive type systems present unique challenges for type inference algorithms.",
+                "The anthropic principle in cosmology posits that the universe's parameters are fine-tuned for life.",
+                "Non-Euclidean geometries have applications in both theoretical physics and computer graphics.",
+                "Quantum entanglement enables instantaneous correlation between particles regardless of distance.",
+                "The correspondence between lambda calculus and combinatory logic reveals deep connections in computation.",
+                "Epigenetic modifications can alter gene expression without changing the DNA sequence.",
+                "Topological data analysis provides tools for studying the shape of high-dimensional data sets.",
+                "The holographic principle suggests the universe's information content scales with its boundary area."
+            ]
+        };
+
+        // DOM elements
+        const levelButtons = document.querySelectorAll('.level-btn');
+        const textDisplay = document.getElementById('text-display');
+        const typingInput = document.getElementById('typing-input');
+        const startBtn = document.getElementById('start-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const timerDisplay = document.getElementById('timer');
+        const wpmDisplay = document.getElementById('wpm');
+        const accuracyDisplay = document.getElementById('accuracy');
+        const timeDisplay = document.getElementById('time');
+
+        // Variables
+        let currentLevel = 'beginner';
+        let currentSentence = '';
+        let timer;
+        let timeLeft = 60;
+        let isTestRunning = false;
+        let startTime;
+        let correctChars = 0;
+        let totalChars = 0;
+
+        // Initialize the application
+        function init() {
+            // Set up level buttons
+            levelButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    levelButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    currentLevel = button.getAttribute('data-level');
+                    resetTest();
+                });
+            });
+
+            // Set up start button
+            startBtn.addEventListener('click', startTest);
+
+            // Set up reset button
+            resetBtn.addEventListener('click', resetTest);
+
+            // Set up typing input
+            typingInput.addEventListener('input', handleTyping);
+
+            // Load initial sentence
+            loadSentence();
+        }
+
+        // Load a random sentence for the current level
+        function loadSentence() {
+            const levelSentences = sentences[currentLevel];
+            const randomIndex = Math.floor(Math.random() * levelSentences.length);
+            currentSentence = levelSentences[randomIndex];
+            
+            // Display the sentence with the first word highlighted
+            const words = currentSentence.split(' ');
+            let html = '';
+            words.forEach((word, index) => {
+                if (index === 0) {
+                    html += `<span class="current-word">${word}</span> `;
+                } else {
+                    html += `${word} `;
+                }
+            });
+            textDisplay.innerHTML = html;
+        }
+
+        // Start the typing test
+        function startTest() {
+            if (isTestRunning) return;
+            
+            isTestRunning = true;
+            startBtn.disabled = true;
+            typingInput.disabled = false;
+            typingInput.focus();
+            
+            // Reset stats
+            timeLeft = 60;
+            correctChars = 0;
+            totalChars = 0;
+            startTime = new Date();
+            
+            // Update displays
+            updateStats();
+            
+            // Start timer
+            timer = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = timeLeft;
+                timeDisplay.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    endTest();
+                }
+            }, 1000);
+        }
+
+        // Reset the typing test
+        function resetTest() {
+            clearInterval(timer);
+            isTestRunning = false;
+            startBtn.disabled = false;
+            typingInput.disabled = true;
+            typingInput.value = '';
+            timeLeft = 60;
+            timerDisplay.textContent = timeLeft;
+            timeDisplay.textContent = timeLeft;
+            wpmDisplay.textContent = '0';
+            accuracyDisplay.textContent = '0%';
+            loadSentence();
+        }
+
+        // Handle typing input
+        function handleTyping() {
+            if (!isTestRunning) return;
+            
+            const typedText = typingInput.value;
+            const words = currentSentence.split(' ');
+            const typedWords = typedText.split(' ');
+            
+            let html = '';
+            let allCorrect = true;
+            
+            words.forEach((word, index) => {
+                if (index < typedWords.length) {
+                    if (word === typedWords[index]) {
+                        html += `<span class="correct">${word}</span> `;
+                    } else {
+                        html += `<span class="incorrect">${word}</span> `;
+                        allCorrect = false;
+                    }
+                } else if (index === typedWords.length) {
+                    html += `<span class="current-word">${word}</span> `;
+                } else {
+                    html += `${word} `;
+                }
+            });
+            
+            textDisplay.innerHTML = html;
+            
+            // Calculate stats
+            calculateStats(typedText);
+            
+            // If the entire sentence is typed correctly, load a new one
+            if (allCorrect && typedWords.length === words.length) {
+                typingInput.value = '';
+                loadSentence();
+            }
+        }
+
+        // Calculate typing statistics
+        function calculateStats(typedText) {
+            // Calculate accuracy
+            totalChars = typedText.length;
+            let errors = 0;
+            
+            for (let i = 0; i < typedText.length; i++) {
+                if (typedText[i] !== currentSentence[i]) {
+                    errors++;
+                }
+            }
+            
+            correctChars = totalChars - errors;
+            const accuracy = totalChars > 0 ? Math.round((correctChars / totalChars) * 100) : 0;
+            
+            // Calculate WPM
+            const timeElapsed = (new Date() - startTime) / 1000 / 60; // in minutes
+            const wordsTyped = typedText.split(' ').length;
+            const wpm = timeElapsed > 0 ? Math.round(wordsTyped / timeElapsed) : 0;
+            
+            // Update displays
+            wpmDisplay.textContent = wpm;
+            accuracyDisplay.textContent = `${accuracy}%`;
+        }
+
+        // Update statistics display
+        function updateStats() {
+            wpmDisplay.textContent = '0';
+            accuracyDisplay.textContent = '0%';
+            timeDisplay.textContent = timeLeft;
+        }
+
+        // End the typing test
+        function endTest() {
+            clearInterval(timer);
+            isTestRunning = false;
+            typingInput.disabled = true;
+            startBtn.disabled = false;
+            
+            // Calculate final stats
+            const timeElapsed = 1; // 1 minute
+            const wordsTyped = typingInput.value.split(' ').length;
+            const wpm = Math.round(wordsTyped / timeElapsed);
+            
+            let errors = 0;
+            for (let i = 0; i < typingInput.value.length; i++) {
+                if (typingInput.value[i] !== currentSentence[i]) {
+                    errors++;
+                }
+            }
+            
+            const accuracy = typingInput.value.length > 0 ? 
+                Math.round(((typingInput.value.length - errors) / typingInput.value.length) * 100) : 0;
+            
+            // Update displays with final stats
+            wpmDisplay.textContent = wpm;
+            accuracyDisplay.textContent = `${accuracy}%`;
+            
+            // Show completion message
+            alert(`Test completed!\nYour typing speed: ${wpm} WPM\nAccuracy: ${accuracy}%`);
+        }
+
+        // Initialize the application when the page loads
+        window.onload = init;
+    </script>
+</body>
+</html>
